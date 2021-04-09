@@ -1,0 +1,12 @@
+Aether's Arrow  Humboldt Redwoods State Park  3.38  111.16
+Alice Rhodes  Humboldt Redwoods State Park  3.35  111.53
+Apex  Humboldt Redwoods State Park  3.38  111.83
+Crown Jewel  Redwood National Park  3.54  110.40
+Daedalus  Redwood National Park  4.26  110.77
+Federation Giant  Humboldt Redwoods State Park  4.54  112.62
+Harriett Weaver  Humboldt Redwoods State Park  4.11  110.68
+Harry Cole  Redwood National Park  4.94  111.65
+Helios  Redwood National Park  4.96  114.58
+Hyperion  Redwood National Park  4.96  115.61
+Icarus  Redwood National Park  3.78  113.14
+John Muir  Humboldt Redwoods State Park  4.27  115.61

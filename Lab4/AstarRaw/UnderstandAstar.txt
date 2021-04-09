@@ -1,0 +1,151 @@
+#import pandas as pd
+#import numpy as np
+#import matplotlib.pyplot as plt
+
+
+#from collections import deque
+
+class Graph:
+    
+
+    def __init__(self, adjacency_list):
+        self.adjacency_list = adjacency_list
+
+    def get_neighbors(self, v):
+        return self.adjacency_list[v]
+    
+    #anumanik heuristic
+    def h(self, n):
+       # a = DFS(self, n)
+        H = {
+            'A': 120,
+            'B': 17,
+            'C': 12,
+            'D': 10,
+            'E':15,
+            'P':25,
+            'Q':2,
+            'X':3,
+            'Y':25,
+            'Z':12
+        }
+
+        return H[n]
+    
+   
+    
+
+   # def DFSUtil(self, v, visited): 
+  
+     #   visited[v] = True
+
+       # for i in self.graph[v]: 
+      #      if visited[i] == False: 
+       #         self.DFSUtil(i, visited) 
+  
+  #  def DFS(self, v): 
+  
+    #    visited = [False] * (len(self.graph)) 
+  
+      #  self.DFSUtil(v, visited) 
+     
+    def a_star_algorithm(self, start_node, stop_node):
+        #open list hocche list of nodes jegula visited hoise, kintu neighbors inspect hoy nai
+        open_list = set([start_node])
+        
+        #closed list hocche list of nodes jegula visited hoise, and neighbors inspect hoy 
+
+
+        closed_list = set([])
+
+        # g = current distance from start nodes to bakishob nodes, jodi na pai tahole eita default infinity
+        g = {}
+
+        g[start_node] = 0
+
+        #adjacency node of all nodes ase parents a
+        parents = {}
+        parents[start_node] = start_node
+        # lowest value ber koro evalution function er 
+        while len(open_list) > 0:
+            n = None
+
+
+            for v in open_list:
+                if n == None or g[v] + self.h(v) < g[n] + self.h(n):
+                    n = v;
+
+            if n == None:
+                print('Path does not exist!')
+                return None
+
+            #current node jodi end node hoy tahole backtrack korbo for getting the path
+            if n == stop_node:
+                    reconst_path = []
+    
+                    while parents[n] != n:
+                        reconst_path.append(n)
+                        n = parents[n]
+    
+                    reconst_path.append(start_node)
+    
+                    reconst_path.reverse()
+    
+                    print('Path found: {}'.format(reconst_path))
+                    return reconst_path
+
+
+            for (m, weight) in self.get_neighbors(n):
+                #current node jodi kono list ei na thake, open list a add korbo sathe n ke parent kore dicchi
+                if m not in open_list and m not in closed_list:
+                    open_list.add(m)
+                    parents[m] = n
+                    g[m] = g[n] + weight
+
+
+                else:
+                    if g[m] > g[n] + weight:
+                        g[m] = g[n] + weight
+                        parents[m] = n
+                        #check korbo ager path better kina mane shortest path khujtesi arki, peye gele update korbo parent r amr g, node tare openlist a assign korbo sathe
+                        if m in closed_list:
+                            closed_list.remove(m)
+                            open_list.add(m)
+
+            #after all done remove kore dicchi open list theke and closed list a diye dicchi 
+            open_list.remove(n)
+            closed_list.add(n)
+
+        print('Path does not exist!')
+        return None
+    
+    
+
+import pandas as pd
+
+data = pd.read_csv('path.csv' , delimiter  = ',')
+
+start = data.columns[0]
+dest = data.columns[1]
+island = data.columns[2]
+
+#Initializing Dictionaries with empty keys
+adjacency_list={}
+for i in range(1,len(data),1):
+    key = data[start][i]
+    adjacency_list.setdefault(key, [])
+    key = data[dest][i]
+    adjacency_list.setdefault(key, [])
+    #adjLsit[key].append(1)
+
+#print(adjacency_list)
+
+#Inputing Values to that coresponding keys
+for i in range(1,len(data),1):
+    adjacency_list[data[start][i]].append((data[dest][i] , data[island][i]))
+    adjacency_list[data[dest][i]].append((data[start][i] , data[island][i]))
+    
+#print(adjacency_list)
+
+graph1 = Graph(adjacency_list)
+graph1.a_star_algorithm('A', 'X')
